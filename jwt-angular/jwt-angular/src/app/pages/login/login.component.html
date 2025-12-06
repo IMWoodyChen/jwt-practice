@@ -1,0 +1,61 @@
+<div class="login-container">
+  <div class="login-card">
+    <h2>JWT Login Test</h2>
+    <p class="subtitle">Login to test JWT authentication with Java Spring Boot</p>
+    
+    <form [formGroup]="formGroup" (ngSubmit)="login()">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input 
+          type="text" 
+          id="username"
+          formControlName="username" 
+          placeholder="Enter username"
+          [class.error]="formGroup.get('username')?.invalid && formGroup.get('username')?.touched"
+        />
+        <div *ngIf="formGroup.get('username')?.invalid && formGroup.get('username')?.touched" class="field-error">
+          Username is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input 
+          type="password" 
+          id="password"
+          formControlName="password" 
+          placeholder="Enter password"
+          [class.error]="formGroup.get('password')?.invalid && formGroup.get('password')?.touched"
+        />
+        <div *ngIf="formGroup.get('password')?.invalid && formGroup.get('password')?.touched" class="field-error">
+          Password is required
+        </div>
+      </div>
+
+      <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </div>
+
+      <button 
+        type="submit" 
+        class="login-btn"
+        [disabled]="loading || formGroup.invalid"
+      >
+        <span *ngIf="!loading">Login</span>
+        <span *ngIf="loading">Logging in...</span>
+      </button>
+    </form>
+
+    <div class="demo-info">
+      <h3>Demo Credentials:</h3>
+      <div class="credentials">
+        <div>
+          <strong>Admin:</strong> admin / admin123
+        </div>
+        <div>
+          <strong>User:</strong> user / user123
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,47 @@
+<div class="protected-container">
+  <div class="header">
+    <h1>Protected Page</h1>
+    <button (click)="logout()" class="logout-btn">Logout</button>
+  </div>
+
+  <div class="content">
+    <div class="card">
+      <h2>Protected Endpoint Test</h2>
+      <div *ngIf="loading" class="loading">Loading...</div>
+      <div *ngIf="error" class="error">{{ error }}</div>
+      <div *ngIf="protectedMessage && !loading && !error" class="success">
+        <p><strong>Response:</strong> {{ protectedMessage }}</p>
+        <p class="info">✅ This endpoint requires JWT authentication</p>
+      </div>
+      <button (click)="loadProtectedData()" [disabled]="loading" class="refresh-btn">
+        Refresh
+      </button>
+    </div>
+
+    <div class="card">
+      <h2>Public Endpoint Test</h2>
+      <div *ngIf="publicMessage" class="success">
+        <p><strong>Response:</strong> {{ publicMessage }}</p>
+        <p class="info">ℹ️ This endpoint does not require authentication</p>
+      </div>
+      <button (click)="loadPublicData()" class="refresh-btn">
+        Refresh
+      </button>
+    </div>
+
+    <div class="card token-info">
+      <h2>Token Information</h2>
+      <p *ngIf="authService.isLoggedIn()" class="token-status">
+        <span class="status-badge authenticated">Authenticated</span>
+      </p>
+      <p *ngIf="!authService.isLoggedIn()" class="token-status">
+        <span class="status-badge not-authenticated">Not Authenticated</span>
+      </p>
+      <div class="token-display" *ngIf="authService.getToken()">
+        <p><strong>Token (first 50 chars):</strong></p>
+        <code>{{ authService.getToken()?.substring(0, 50) }}...</code>
+      </div>
+    </div>
+  </div>
+</div>
+
